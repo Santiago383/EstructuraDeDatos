@@ -42,8 +42,8 @@ public class Transformacion {
             
             return newNode;
         }else{
-          /*parecido al caso anterior pero cuando algun elemento, ya sea un hijo o un subarbol,
-          es nulo, suma un cero*/
+            /*parecido al caso anterior pero cuando algun elemento, ya sea un hijo o un subarbol,
+            es nulo, suma un cero*/
         	int leftChildSum = node.getLeftChild() != null ? node.getLeftChild().getData() : 0;
         	int rightChildSum = node.getRightChild() != null ? node.getRightChild().getData() : 0;
         	int leftSubtreeSum = leftSubtree != null ? leftSubtree.getData() : 0;
