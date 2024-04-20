@@ -1,0 +1,62 @@
+package practicaarboles;
+
+public class Transformacion {
+    private BinaryTree<Integer> binaryTree;
+
+    //constructor
+    public Transformacion(BinaryTree<Integer> binaryTree) {
+        this.binaryTree = binaryTree;
+    }
+
+    public BinaryTree<Integer> suma() {
+        return sumaAux(binaryTree);
+    }
+
+    //metodo que construye el arbol con los valores modificados
+    private BinaryTree<Integer> sumaAux(BinaryTree<Integer> node) {
+        //devuelve nulo cuando el subarbol esta vacio
+        if (node == null) {
+            return null;
+        }
+
+        //obtiene los subarboles izquierdo y derecho recursivamente
+        BinaryTree<Integer> leftSubtree = sumaAux(node.getLeftChild());
+        BinaryTree<Integer> rightSubtree = sumaAux(node.getRightChild());
+        
+        
+        if(node.isLeaf()){
+            //cuando el nodo es una hoja devuelve un nodo con dato 0 y sin hijos
+            BinaryTree<Integer> newNode = new BinaryTree<>(0);
+
+            return newNode;
+        }else if(node.getLeftChild() != null && node.getRightChild() != null){
+            /*si ninguno de los dos hijos es nulo suma los dos hijos del nodo actual mas
+            los datos de los subarboles izq y der y asigna la suma a un arbol nuevo, al que
+            le agrega los dos subarboles como hijos*/
+            int sum = node.getLeftChild().getData() + node.getRightChild().getData() +
+            		leftSubtree.getData() + rightSubtree.getData();
+            
+            BinaryTree<Integer> newNode = new BinaryTree<>(sum);
+            newNode.addLeftChild(leftSubtree);
+            newNode.addRightChild(rightSubtree);
+            
+            return newNode;
+        }else{
+          /*parecido al caso anterior pero cuando algun elemento, ya sea un hijo o un subarbol,
+          es nulo, suma un cero*/
+        	int leftChildSum = node.getLeftChild() != null ? node.getLeftChild().getData() : 0;
+        	int rightChildSum = node.getRightChild() != null ? node.getRightChild().getData() : 0;
+        	int leftSubtreeSum = leftSubtree != null ? leftSubtree.getData() : 0;
+        	int rightSubtreeSum = rightSubtree != null ? rightSubtree.getData() : 0;
+        	int sum = leftChildSum + rightChildSum + leftSubtreeSum + rightSubtreeSum;
+        	
+        	BinaryTree<Integer> newNode = new BinaryTree<>(sum);
+            newNode.addLeftChild(leftSubtree);
+            newNode.addRightChild(rightSubtree);
+            
+            return newNode;
+        } 
+        
+    }
+
+}
